@@ -1,0 +1,68 @@
+/*--------------- Resets ---------------*/
+@import url("./reset.css");
+/* maybe add my reset css if needed */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/*--------------- Fonts ---------------*/
+/* Dana Fonts */
+@font-face {
+  font-family: "Dana";
+  src: url("./../fonts/Dana/woff2/DanaFaNum-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dana";
+  src: url("./../fonts/Dana/woff2/DanaFaNum-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dana";
+  src: url("./../fonts/Dana/woff2/DanaFaNum-DemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*--------------- Variables ---------------*/
+:root {
+  /* light theme */
+}
+
+.dark:root {
+  /* dark theme */
+}
+
+/*--------------- Global Styles ---------------*/
+
+body {
+  background-color: #f0f0f0;
+  font-family: "Dana", sans-serif;
+  direction: rtl;
+}
+
+*,
+*::before,
+*::after {
+  font-family: "Dana", sans-serif;
+}
+
+/*--------------- Helper Classes ---------------*/
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.icon {
+  font-size: 24px;
+  display: inline-block;
+  flex-shrink: 0;
+}

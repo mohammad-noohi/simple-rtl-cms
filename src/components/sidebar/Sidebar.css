@@ -1,0 +1,136 @@
+.sidebar {
+  background-color: rgb(231, 231, 231);
+  flex: 0 0 auto;
+  width: 250px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  transition: all 300ms ease-in;
+  padding: 1rem;
+}
+
+.sidebar.collapsed {
+  width: 74px;
+  overflow: hidden;
+}
+
+.sidebar__header {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.sidebar__toggler {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.btn.btn-close.sidebar__close-btn {
+  display: none;
+}
+
+.sidebar__title {
+  opacity: 1;
+  visibility: visible;
+  transition: all 200ms ease-in;
+}
+
+.sidebar.collapsed .sidebar__title {
+  opacity: 0;
+  visibility: 0;
+}
+
+.sidebar__nav {
+  margin-top: 1rem;
+}
+
+.sidebar__nav-list {
+}
+
+.sidebar__nav-item:not(:last-child) {
+  margin-top: 0.5rem;
+}
+
+.sidebar__nav-link {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 80ms linear;
+}
+
+.sidebar__nav-link:hover {
+  background-color: #d9d9d9;
+  color: #471aaa;
+}
+
+.sidebar__nav-link--active {
+  background-color: #d9d9d9;
+  color: #471aaa;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem;
+}
+
+.backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.burger-btn {
+  display: none;
+  border: none;
+  outline: none;
+  padding: 1rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 250px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .backdrop {
+    display: block;
+  }
+
+  .burger-btn {
+    display: block;
+  }
+
+  .sidebar__header {
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+
+  .sidebar__toggler {
+    display: none !important;
+  }
+
+  .sidebar__close-btn {
+    display: block;
+  }
+}
