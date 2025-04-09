@@ -8,6 +8,7 @@ import { LiaComments } from "react-icons/lia";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { GoSidebarExpand } from "react-icons/go";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   /*---------- States ----------*/
@@ -31,40 +32,40 @@ export default function Sidebar() {
         <nav className="sidebar__nav">
           <ul className="sidebar__nav-list">
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link sidebar__nav-link--active" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/">
                 <GoHome className="icon" />
                 <span className="text-truncate ">صفحه اصلی</span>
-              </a>
+              </NavLink>
             </li>
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/products">
                 <BsBoxes className="icon" />
                 <span className="text-truncate">محصولات</span>
-              </a>
+              </NavLink>
             </li>
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/comments">
                 <LiaComments className="icon" />
                 <span className="text-truncate">کامنت ها</span>
-              </a>
+              </NavLink>
             </li>
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/users">
                 <FiUsers className="icon" />
                 <span className="text-truncate">کاربران</span>
-              </a>
+              </NavLink>
             </li>
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/orders">
                 <FiShoppingCart className="icon" />
                 <span className="text-truncate">سفارشات</span>
-              </a>
+              </NavLink>
             </li>
             <li className="sidebar__nav-item">
-              <a className="link sidebar__nav-link" href="#">
+              <NavLink className={({ isActive }) => `link sidebar__nav-link ${isActive ? "sidebar__nav-link--active" : ""}`} to="/offers">
                 <MdOutlineLocalOffer className="icon" />
                 <span className="text-truncate">تخفیف ها</span>
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>

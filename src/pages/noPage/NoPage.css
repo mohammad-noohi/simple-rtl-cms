@@ -1,0 +1,12 @@
+.error-img {
+  width: 600px;
+}
+
+.error-btn {
+  border: none;
+  outline: none;
+  padding: 16px 16px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #471aaa;
+}
