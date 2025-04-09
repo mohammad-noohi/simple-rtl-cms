@@ -2,3 +2,31 @@
   display: flex;
   min-height: 100vh;
 }
+
+/* Start Header */
+
+/* search box style */
+.search-box {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  display: flex;
+  /* align-items: center; */
+  gap: 0.5rem;
+}
+
+.search-box__input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.search-box__btn {
+  background-color: #471aaa;
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Finish Header */

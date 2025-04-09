@@ -67,13 +67,14 @@
 }
 
 .sidebar__nav-link:hover {
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
   color: #471aaa;
 }
 
 .sidebar__nav-link--active {
-  background-color: #d9d9d9;
-  color: #471aaa;
+  /* background-color: #d9d9d9; */
+  background-color: rgba(146, 97, 253, 0.147);
+  color: #471aaa !important;
 }
 
 .main {
