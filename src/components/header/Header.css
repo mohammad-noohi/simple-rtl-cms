@@ -13,19 +13,25 @@
 
 /* search box style */
 .search-box {
+  width: 200px;
+  flex-shrink: 0;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #aaa;
   background-color: #fff;
   display: flex;
-  /* align-items: center; */
   gap: 0.5rem;
+  transition: width 300ms ease;
 }
 
 .search-box__input {
   width: 100%;
   border: none;
   outline: none;
+}
+
+.search-box--expand {
+  width: 300px;
 }
 
 .search-box__btn {
