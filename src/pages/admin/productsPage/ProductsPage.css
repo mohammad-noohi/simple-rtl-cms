@@ -1,0 +1,50 @@
+.add-product-from-sec {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 1rem;
+}
+
+.input-group {
+  border: 1.4px solid #aaa;
+  background-color: #fafafa;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  gap: 0.5rem;
+  transition: all 200ms;
+}
+
+.input-group input {
+  padding: 0.8rem;
+  flex-grow: 1;
+  border: 0;
+  outline: 0;
+  align-self: stretch;
+  background-color: transparent;
+}
+
+.input-group .icon {
+  color: #86909c;
+  transition: all 200ms;
+}
+
+.input-group:has(input:focus) {
+  border-color: #471aaa;
+}
+
+.input-group:has(input:focus) .icon {
+  color: #471aaa;
+}
+
+.add-product__btn {
+  display: block;
+  border: none;
+  outline: none;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #471aaa;
+  color: #fff;
+  margin-top: 1rem;
+  margin-right: auto;
+}

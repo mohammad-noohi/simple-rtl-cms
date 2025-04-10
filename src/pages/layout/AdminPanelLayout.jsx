@@ -11,7 +11,9 @@ export default function AdminPanelLayout() {
         <Sidebar />
         <main className="main">
           <Header />
-          <Outlet />
+          <div className="mt-5">
+            <Outlet />
+          </div>
         </main>
       </div>
     </>

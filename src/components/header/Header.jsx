@@ -9,7 +9,7 @@ export default function Header() {
     <header className="header">
       <div className="container-fluid">
         <div className="header__wrapper">
-          <div>
+          <div className="d-flex align-items-center gap-4">
             <ProfileDropdown />
           </div>
 

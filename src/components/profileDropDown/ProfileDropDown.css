@@ -16,8 +16,7 @@
 }
 
 .profile__list {
-  opacity: 0;
-  visibility: 0;
+  display: none;
   background-color: rgb(255, 255, 255);
   padding: 0 1rem;
   border-radius: 10px;
@@ -26,7 +25,6 @@
   position: absolute;
   top: 100%;
   margin-top: 8px;
-  transition: all 200ms;
   z-index: 4;
 }
 
@@ -40,8 +38,7 @@
 }
 
 .profile--open .profile__list {
-  opacity: 1;
-  visibility: 1;
+  display: block;
 }
 
 .logout-btn {
