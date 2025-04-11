@@ -9,6 +9,7 @@ import { LuLink } from "react-icons/lu";
 import { PiChartLineUpBold } from "react-icons/pi";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineColorLens } from "react-icons/md";
+import DeleteModal from "../../../components/deleteModal/DeleteModal";
 
 export default function ProductsPage() {
   return (
@@ -88,6 +89,7 @@ export default function ProductsPage() {
                       height="60px"
                       src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
                       alt=""
+                      className="table-product__img"
                     />
                   </td>
                   <td className="border align-middle">iphone 16 pro max</td>
@@ -109,6 +111,7 @@ export default function ProductsPage() {
                       height="60px"
                       src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
                       alt=""
+                      className="table-product__img"
                     />
                   </td>
                   <td className="border align-middle">iphone 16 pro max</td>
@@ -130,6 +133,7 @@ export default function ProductsPage() {
                       height="60px"
                       src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
                       alt=""
+                      className="table-product__img"
                     />
                   </td>
                   <td className="border align-middle">iphone 16 pro max</td>
@@ -151,6 +155,7 @@ export default function ProductsPage() {
                       height="60px"
                       src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
                       alt=""
+                      className="table-product__img"
                     />
                   </td>
                   <td className="border align-middle">iphone 16 pro max</td>
@@ -169,6 +174,8 @@ export default function ProductsPage() {
           </div>
         </section>
       </div>
+
+      {/* <DeleteModal /> */}
     </>
   );
 }
