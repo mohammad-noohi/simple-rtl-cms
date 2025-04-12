@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorBox from "../../../components/errorBox/ErrorBox";
 import "./ProductsPage.css";
 // icons
@@ -18,6 +18,13 @@ export default function ProductsPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/products/")
+      .then(resp => resp.json())
+      .then(products => setAllProducts(products));
+  }, []);
 
   // DeleteModal Actions ---
   const openDeleteModal = () => setIsDeleteModalOpen(true);
@@ -46,7 +53,6 @@ export default function ProductsPage() {
 
   return (
     <>
-      {/* <ErrorBox msg="هیچ محصولی یافت نشد" /> */}
       <div>
         <h1 className="fs-1 fw-bold">افزودن محصول جدید</h1>
         <section className="add-product-from-sec mt-5 bg-white p-4 rounded shadow">
@@ -100,51 +106,51 @@ export default function ProductsPage() {
           </form>
         </section>
 
-        <section className="products-table mt-5 bg-white p-4 rounded shadow">
-          <h2 className="fs-2 fw-bold">محصولات</h2>
-          <div className="table-responsive mt-4">
-            <table className="table table-striped table-hover align-middle  border text-center text-nowrap">
-              <thead>
-                <tr>
-                  <th className="fw-bold border">عکس</th>
-                  <th className="fw-bold border">اسم</th>
-                  <th className="fw-bold border">قیمت</th>
-                  <th className="fw-bold border">موجودی</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="table-product__img border align-middle">
-                    <img
-                      width="60px"
-                      height="60px"
-                      src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
-                      alt=""
-                      className="table-product__img"
-                    />
-                  </td>
-                  <td className="border align-middle">iphone 16 pro max</td>
-                  <td className="border align-middle">۴۰۰۰۰۰۰ تومان</td>
-                  <td className="border align-middle">15</td>
-                  <td className="border align-middle">
-                    <div className="d-flex justify-content-center gap-3">
-                      <button className="btn " style={{ backgroundColor: "#a58eff" }} onClick={openDetailsModal}>
-                        جزئیات
-                      </button>
-                      <button className="btn " style={{ backgroundColor: "#e03a3a" }} onClick={openDeleteModal}>
-                        حذف
-                      </button>
-                      <button className="btn " style={{ backgroundColor: "#16a3b8" }} onClick={openEditModal}>
-                        ویرایش
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+        {allProducts.length > 0 ? (
+          <section className="products-table mt-5 bg-white p-4 rounded shadow">
+            <h2 className="fs-2 fw-bold">محصولات</h2>
+            <div className="table-responsive mt-4">
+              <table className="table table-striped table-hover align-middle  border text-center text-nowrap">
+                <thead>
+                  <tr>
+                    <th className="fw-bold border">عکس</th>
+                    <th className="fw-bold border">اسم</th>
+                    <th className="fw-bold border">قیمت</th>
+                    <th className="fw-bold border">موجودی</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allProducts?.map(product => (
+                    <tr key={product.id}>
+                      <td className="table-product__img border align-middle">
+                        <img width="60px" height="60px" src={product.img} alt="" className="table-product__img" />
+                      </td>
+                      <td className="border align-middle">{product.title}</td>
+                      <td className="border align-middle">{product.price} تومان</td>
+                      <td className="border align-middle">{product.count}</td>
+                      <td className="border align-middle">
+                        <div className="d-flex justify-content-center gap-3">
+                          <button className="btn " style={{ backgroundColor: "#a58eff" }} onClick={openDetailsModal}>
+                            جزئیات
+                          </button>
+                          <button className="btn " style={{ backgroundColor: "#e03a3a" }} onClick={openDeleteModal}>
+                            حذف
+                          </button>
+                          <button className="btn " style={{ backgroundColor: "#16a3b8" }} onClick={openEditModal}>
+                            ویرایش
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ) : (
+          <ErrorBox msg="هیچ محصولی یافت نشد" />
+        )}
       </div>
 
       {isDeleteModalOpen && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
