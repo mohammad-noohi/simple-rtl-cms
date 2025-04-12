@@ -19,11 +19,19 @@ export default function ProductsPage() {
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/products/")
       .then(resp => resp.json())
-      .then(products => setAllProducts(products));
+      .then(products => {
+        setAllProducts(products);
+        setLoadingProducts(false); // finish fetch data and get response
+      })
+      .catch(() => {
+        setAllProducts([]);
+        setLoadingProducts(false);
+      });
   }, []);
 
   // DeleteModal Actions ---
@@ -106,7 +114,11 @@ export default function ProductsPage() {
           </form>
         </section>
 
-        {allProducts.length > 0 ? (
+        {loadingProducts ? (
+          <div className="spinner-border mt-5" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : allProducts.length > 0 ? (
           <section className="products-table mt-5 bg-white p-4 rounded shadow">
             <h2 className="fs-2 fw-bold">محصولات</h2>
             <div className="table-responsive mt-4">
