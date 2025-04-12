@@ -48,3 +48,41 @@
   mix-blend-mode: multiply;
 }
 /* Finish Products Table */
+
+/* Start Edit Product Form */
+.edit-product {
+  margin-top: 20px;
+  width: 400px;
+}
+
+.edit-product .edit-product__input-group {
+  background-color: #f4f4f4;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid transparent;
+  transition: all 200ms ease;
+}
+
+.edit-product .edit-product__input-group-icon {
+  color: #757575;
+  transition: all 200ms ease;
+}
+
+.edit-product .edit-product__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.edit-product .edit-product__input-group:has(.edit-product__input:focus) {
+  border-color: #471aaa;
+}
+
+.edit-product .edit-product__input-group:has(.edit-product__input:focus) .edit-product__input-group-icon {
+  color: #471aaa;
+}
+/* Finish Edit Product Form */

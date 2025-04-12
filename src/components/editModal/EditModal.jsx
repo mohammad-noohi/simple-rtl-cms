@@ -45,9 +45,14 @@ export default function EditModal({ children, onClose, onSubmitHandler }) {
         <form className="edit-modal__form" onSubmit={onSubmitHandler}>
           <h4 className="edit-modal__title">اطلاعات جدید را وارد نمایید</h4>
           {children}
-          <button type="submit" className="edit-modal__submit-btn">
-            ویرایش
-          </button>
+          <div className="d-flex align-items-center gap-2 mt-4">
+            <button type="submit" className="edit-modal__submit-btn m-0">
+              ویرایش
+            </button>
+            <button type="button" className="edit-modal__cancel-btn m-0" onClick={onClose}>
+              انصراف
+            </button>
+          </div>
         </form>
       </div>
     </div>

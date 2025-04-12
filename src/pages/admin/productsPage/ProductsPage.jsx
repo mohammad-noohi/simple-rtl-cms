@@ -129,13 +129,13 @@ export default function ProductsPage() {
                   <td className="border align-middle">15</td>
                   <td className="border align-middle">
                     <div className="d-flex justify-content-center gap-3">
-                      <button className="btn btn-info" onClick={openDetailsModal}>
+                      <button className="btn " style={{ backgroundColor: "#a58eff" }} onClick={openDetailsModal}>
                         جزئیات
                       </button>
-                      <button className="btn btn-danger" onClick={openDeleteModal}>
+                      <button className="btn " style={{ backgroundColor: "#e03a3a" }} onClick={openDeleteModal}>
                         حذف
                       </button>
-                      <button className="btn btn-warning" onClick={openEditModal}>
+                      <button className="btn " style={{ backgroundColor: "#16a3b8" }} onClick={openEditModal}>
                         ویرایش
                       </button>
                     </div>
@@ -151,7 +151,34 @@ export default function ProductsPage() {
 
       {isDetailsModalOpen && <DetailsModal onClose={closeDetailsModal} />}
 
-      {isEditModalOpen && <EditModal onClose={closeEditModal} onSubmitHandler={editModalSubmitHandler} />}
+      {isEditModalOpen && (
+        <EditModal onClose={closeEditModal} onSubmitHandler={editModalSubmitHandler}>
+          <div className="edit-product">
+            <div className="edit-product__input-group">
+              <LuPencil className="icon edit-product__input-group-icon" />
+              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+            </div>
+          </div>
+          <div className="edit-product">
+            <div className="edit-product__input-group">
+              <AiOutlineDollarCircle className="icon edit-product__input-group-icon" />
+              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+            </div>
+          </div>
+          <div className="edit-product">
+            <div className="edit-product__input-group">
+              <MdStorefront className="icon edit-product__input-group-icon" />
+              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+            </div>
+          </div>
+          <div className="edit-product">
+            <div className="edit-product__input-group">
+              <LuLink className="icon edit-product__input-group-icon" />
+              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+            </div>
+          </div>
+        </EditModal>
+      )}
     </>
   );
 }
