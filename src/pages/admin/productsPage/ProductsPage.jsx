@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ErrorBox from "../../../components/errorBox/ErrorBox";
 import "./ProductsPage.css";
 // icons
@@ -10,8 +10,30 @@ import { PiChartLineUpBold } from "react-icons/pi";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineColorLens } from "react-icons/md";
 import DeleteModal from "../../../components/deleteModal/DeleteModal";
+import DetailsModal from "../../../components/detailsModal/DetailsModal";
 
 export default function ProductsPage() {
+  // States
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+
+  // DeleteModal Actions ---
+  const openDeleteModal = () => setIsDeleteModalOpen(true);
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  const deleteModalSubmitAction = () => {
+    console.log("submit action run");
+    closeDeleteModal();
+  };
+
+  const deleteModalCancelAction = () => {
+    console.log("cancel action run");
+    closeDeleteModal();
+  };
+
+  // DetailsModal Actions --
+  const openDetailsModal = () => setIsDetailsModalOpen(true);
+  const closeDetailsModal = () => setIsDetailsModalOpen(false);
+
   return (
     <>
       {/* <ErrorBox msg="هیچ محصولی یافت نشد" /> */}
@@ -97,75 +119,13 @@ export default function ProductsPage() {
                   <td className="border align-middle">15</td>
                   <td className="border align-middle">
                     <div className="d-flex justify-content-center gap-3">
-                      <button className="btn btn-info">details</button>
-                      <button className="btn btn-danger">delete</button>
-                      <button className="btn btn-warning">edit</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td className="table-product__img border align-middle">
-                    <img
-                      width="60px"
-                      height="60px"
-                      src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
-                      alt=""
-                      className="table-product__img"
-                    />
-                  </td>
-                  <td className="border align-middle">iphone 16 pro max</td>
-                  <td className="border align-middle">۴۰۰۰۰۰۰ تومان</td>
-                  <td className="border align-middle">15</td>
-                  <td className="border align-middle">
-                    <div className="d-flex justify-content-center gap-3">
-                      <button className="btn btn-info">details</button>
-                      <button className="btn btn-danger">delete</button>
-                      <button className="btn btn-warning">edit</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td className="table-product__img border align-middle">
-                    <img
-                      width="60px"
-                      height="60px"
-                      src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
-                      alt=""
-                      className="table-product__img"
-                    />
-                  </td>
-                  <td className="border align-middle">iphone 16 pro max</td>
-                  <td className="border align-middle">۴۰۰۰۰۰۰ تومان</td>
-                  <td className="border align-middle">15</td>
-                  <td className="border align-middle">
-                    <div className="d-flex justify-content-center gap-3">
-                      <button className="btn btn-info">details</button>
-                      <button className="btn btn-danger">delete</button>
-                      <button className="btn btn-warning">edit</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td className="table-product__img border align-middle">
-                    <img
-                      width="60px"
-                      height="60px"
-                      src="https://dkstatics-public.digikala.com/digikala-products/13d979a81d76d60e37dd3ae9aec6d21c099590c6_1736598864.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90"
-                      alt=""
-                      className="table-product__img"
-                    />
-                  </td>
-                  <td className="border align-middle">iphone 16 pro max</td>
-                  <td className="border align-middle">۴۰۰۰۰۰۰ تومان</td>
-                  <td className="border align-middle">15</td>
-                  <td className="border align-middle">
-                    <div className="d-flex justify-content-center gap-3">
-                      <button className="btn btn-info">details</button>
-                      <button className="btn btn-danger">delete</button>
-                      <button className="btn btn-warning">edit</button>
+                      <button className="btn btn-info" onClick={openDetailsModal}>
+                        جزئیات
+                      </button>
+                      <button className="btn btn-danger" onClick={openDeleteModal}>
+                        حذف
+                      </button>
+                      <button className="btn btn-warning">ویرایش</button>
                     </div>
                   </td>
                 </tr>
@@ -175,7 +135,9 @@ export default function ProductsPage() {
         </section>
       </div>
 
-      {/* <DeleteModal /> */}
+      {isDeleteModalOpen && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
+
+      {isDetailsModalOpen && <DetailsModal onClose={closeDetailsModal} />}
     </>
   );
 }

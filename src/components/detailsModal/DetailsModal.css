@@ -1,0 +1,12 @@
+.details-modal {
+  background-color: #fff;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  transform: translateY(-20px);
+  transition: 400ms ease;
+}
+
+.modal-backdrop.active .details-modal {
+  transform: translateY(0);
+}
