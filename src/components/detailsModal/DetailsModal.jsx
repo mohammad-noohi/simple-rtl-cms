@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./DetailsModal.css";
 
 export default function DetailsModal({ onClose }) {
+  // Element Ref
+  const backdropRef = useRef();
+
   // close modal with escape key
   useEffect(() => {
     const escapeHandler = e => {
@@ -18,8 +21,25 @@ export default function DetailsModal({ onClose }) {
     };
   }, [onClose]);
 
+  // close with backdrop
+  useEffect(() => {
+    const backdropElm = backdropRef.current;
+
+    const closeDetailsModalWithBackdrop = e => {
+      if (e.target === backdropElm) {
+        onClose();
+      }
+    };
+
+    backdropElm.addEventListener("click", closeDetailsModalWithBackdrop);
+
+    return () => {
+      backdropElm.removeEventListener("click", closeDetailsModalWithBackdrop);
+    };
+  });
+
   return (
-    <div className="modal-backdrop active" onClick={onClose}>
+    <div className="modal-backdrop active" ref={backdropRef}>
       <div className="details-modal">
         <div className="table-responsive">
           <table className="table text-nowrap text-nowrap">

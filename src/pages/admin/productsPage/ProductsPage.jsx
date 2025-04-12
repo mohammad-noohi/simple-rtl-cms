@@ -11,11 +11,13 @@ import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineColorLens } from "react-icons/md";
 import DeleteModal from "../../../components/deleteModal/DeleteModal";
 import DetailsModal from "../../../components/detailsModal/DetailsModal";
+import EditModal from "../../../components/editModal/EditModal";
 
 export default function ProductsPage() {
   // States
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // DeleteModal Actions ---
   const openDeleteModal = () => setIsDeleteModalOpen(true);
@@ -33,6 +35,14 @@ export default function ProductsPage() {
   // DetailsModal Actions --
   const openDetailsModal = () => setIsDetailsModalOpen(true);
   const closeDetailsModal = () => setIsDetailsModalOpen(false);
+
+  // EditModal Actions ---
+  const openEditModal = () => setIsEditModalOpen(true);
+  const closeEditModal = () => setIsEditModalOpen(false);
+  const editModalSubmitHandler = event => {
+    event.preventDefault();
+    console.log("edit modal submit");
+  };
 
   return (
     <>
@@ -125,7 +135,9 @@ export default function ProductsPage() {
                       <button className="btn btn-danger" onClick={openDeleteModal}>
                         حذف
                       </button>
-                      <button className="btn btn-warning">ویرایش</button>
+                      <button className="btn btn-warning" onClick={openEditModal}>
+                        ویرایش
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -138,6 +150,8 @@ export default function ProductsPage() {
       {isDeleteModalOpen && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
 
       {isDetailsModalOpen && <DetailsModal onClose={closeDetailsModal} />}
+
+      {isEditModalOpen && <EditModal onClose={closeEditModal} onSubmitHandler={editModalSubmitHandler} />}
     </>
   );
 }

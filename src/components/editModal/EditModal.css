@@ -1,0 +1,29 @@
+.edit-modal {
+  background-color: #fff;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+  transform: translateY(-20px);
+  transition: 400ms ease;
+}
+
+.edit-modal__form {
+}
+
+.edit-modal__title {
+  font-size: 1.2rem;
+}
+
+.edit-modal__submit-btn {
+  background-color: #471aaa;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  outline: none;
+  margin-top: 20px;
+}
+
+.modal-backdrop.active .edit-modal {
+  transform: translateY(0);
+}

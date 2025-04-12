@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import "./DeleteModal.css";
 
 export default function DeleteModal({ submitAction, cancelAction, onClose }) {
+  // Elements Ref
+  const backdropRef = useRef();
+
   // close modal with escape key
   useEffect(() => {
     const escapeHandler = e => {
@@ -18,8 +21,26 @@ export default function DeleteModal({ submitAction, cancelAction, onClose }) {
     };
   }, [onClose]);
 
+  // close modal with backdrop
+  useEffect(() => {
+    const backdropElm = backdropRef.current;
+
+    const closeDeleteModalWithBackdrop = e => {
+      if (e.target === backdropElm) {
+        onClose();
+      }
+    };
+
+    backdropElm.addEventListener("click", closeDeleteModalWithBackdrop);
+
+    // cleann up
+    return () => {
+      backdropElm.removeEventListener("click", closeDeleteModalWithBackdrop);
+    };
+  });
+
   return ReactDOM.createPortal(
-    <div className="modal-backdrop active" onClick={onClose}>
+    <div className="modal-backdrop active" ref={backdropRef}>
       <div className="delete-modal">
         <h1 className="modal-title">آیا از حذف اطمینان دارید ؟</h1>
         <div className="delete-modal-btns">
