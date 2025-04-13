@@ -12,6 +12,7 @@ import { MdOutlineColorLens } from "react-icons/md";
 import DeleteModal from "../../../components/deleteModal/DeleteModal";
 import DetailsModal from "../../../components/detailsModal/DetailsModal";
 import EditModal from "../../../components/editModal/EditModal";
+import { toast } from "react-toastify";
 
 const BASE_URL = "http://localhost:3000/api";
 
@@ -47,14 +48,21 @@ export default function ProductsPage() {
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
 
   const deleteModalSubmitAction = () => {
-    fetch(`http://localhost:3000/api/products/${productID}`, {
-      method: "DELETE",
-    }).then(resp => {
-      if (resp.ok) {
-        getAllProducts();
-        closeDeleteModal();
+    toast.promise(
+      fetch(`http://localhost:3000/api/products/${productID}`, {
+        method: "DELETE",
+      }).then(resp => {
+        if (resp.ok) {
+          getAllProducts();
+          closeDeleteModal();
+        }
+      }),
+      {
+        pending: "درحال حذف ...",
+        success: "محصول با موفقیت حذف شد",
+        error: "مشکلی پیش آمده",
       }
-    });
+    );
   };
 
   const deleteModalCancelAction = () => {
