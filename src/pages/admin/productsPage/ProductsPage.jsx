@@ -89,26 +89,34 @@ export default function ProductsPage() {
 
   const editModalSubmitHandler = event => {
     event.preventDefault();
-    fetch(`http://localhost:3000/api/products/${mainProduct.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: mainProduct.title,
-        price: mainProduct.price,
-        count: mainProduct.count,
-        img: mainProduct.img,
-        popularity: mainProduct.popularity,
-        sale: mainProduct.sale,
-        colors: mainProduct.colors,
+
+    toast.promise(
+      fetch(`http://localhost:3000/api/products/${mainProduct.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: mainProduct.title,
+          price: mainProduct.price,
+          count: mainProduct.count,
+          img: mainProduct.img,
+          popularity: mainProduct.popularity,
+          sale: mainProduct.sale,
+          colors: mainProduct.colors,
+        }),
+      }).then(resp => {
+        if (resp.ok) {
+          getAllProducts();
+          closeEditModal();
+        }
       }),
-    }).then(resp => {
-      if (resp.ok) {
-        getAllProducts();
-        closeEditModal();
+      {
+        pending: "در حال اعمال تغییرات ...",
+        success: "تغییرات اعمال شد",
+        error: "مشکلی پیش آمده دوباره تلاش کنید",
       }
-    });
+    );
   };
 
   return (
