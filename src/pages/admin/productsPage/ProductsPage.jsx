@@ -7,11 +7,13 @@ import { AiOutlineDollarCircle } from "react-icons/ai";
 import { MdStorefront } from "react-icons/md";
 import { LuLink } from "react-icons/lu";
 import { PiChartLineUpBold } from "react-icons/pi";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaSadCry } from "react-icons/fa";
 import { MdOutlineColorLens } from "react-icons/md";
 import DeleteModal from "../../../components/deleteModal/DeleteModal";
 import DetailsModal from "../../../components/detailsModal/DetailsModal";
 import EditModal from "../../../components/editModal/EditModal";
+
+const BASE_URL = "http://localhost:3000/api";
 
 export default function ProductsPage() {
   // States
@@ -20,9 +22,10 @@ export default function ProductsPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [productID, setProductID] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/products/")
+  const getAllProducts = () => {
+    fetch(`http://localhost:3000/api/products`)
       .then(resp => resp.json())
       .then(products => {
         setAllProducts(products);
@@ -32,14 +35,26 @@ export default function ProductsPage() {
         setAllProducts([]);
         setLoadingProducts(false);
       });
+  };
+
+  useEffect(() => {
+    getAllProducts();
   }, []);
 
   // DeleteModal Actions ---
   const openDeleteModal = () => setIsDeleteModalOpen(true);
+
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
+
   const deleteModalSubmitAction = () => {
-    console.log("submit action run");
-    closeDeleteModal();
+    fetch(`http://localhost:3000/api/products/${productID}`, {
+      method: "DELETE",
+    }).then(resp => {
+      if (resp.ok) {
+        getAllProducts();
+        closeDeleteModal();
+      }
+    });
   };
 
   const deleteModalCancelAction = () => {
@@ -49,11 +64,14 @@ export default function ProductsPage() {
 
   // DetailsModal Actions --
   const openDetailsModal = () => setIsDetailsModalOpen(true);
+
   const closeDetailsModal = () => setIsDetailsModalOpen(false);
 
   // EditModal Actions ---
   const openEditModal = () => setIsEditModalOpen(true);
+
   const closeEditModal = () => setIsEditModalOpen(false);
+
   const editModalSubmitHandler = event => {
     event.preventDefault();
     console.log("edit modal submit");
@@ -146,7 +164,13 @@ export default function ProductsPage() {
                           <button className="btn " style={{ backgroundColor: "#a58eff" }} onClick={openDetailsModal}>
                             جزئیات
                           </button>
-                          <button className="btn " style={{ backgroundColor: "#e03a3a" }} onClick={openDeleteModal}>
+                          <button
+                            className="btn "
+                            style={{ backgroundColor: "#e03a3a" }}
+                            onClick={() => {
+                              setProductID(product.id);
+                              openDeleteModal();
+                            }}>
                             حذف
                           </button>
                           <button className="btn " style={{ backgroundColor: "#16a3b8" }} onClick={openEditModal}>
