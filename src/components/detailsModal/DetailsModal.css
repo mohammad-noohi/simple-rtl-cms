@@ -5,6 +5,8 @@
   border-radius: 10px;
   transform: translateY(-20px);
   transition: 400ms ease;
+  max-width: 1000px;
+  width: 100%;
 }
 
 .modal-backdrop.active .details-modal {

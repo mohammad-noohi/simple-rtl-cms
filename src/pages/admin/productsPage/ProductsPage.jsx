@@ -24,6 +24,7 @@ export default function ProductsPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [productID, setProductID] = useState(null);
+  const [mainProduct, setMainProduct] = useState(null);
 
   const getAllProducts = () => {
     fetch(`http://localhost:3000/api/products`)
@@ -71,18 +72,43 @@ export default function ProductsPage() {
   };
 
   // DetailsModal Actions --
-  const openDetailsModal = () => setIsDetailsModalOpen(true);
+  const openDetailsModal = product => {
+    setIsDetailsModalOpen(true);
+    setMainProduct(product);
+  };
 
   const closeDetailsModal = () => setIsDetailsModalOpen(false);
 
   // EditModal Actions ---
-  const openEditModal = () => setIsEditModalOpen(true);
+  const openEditModal = product => {
+    setIsEditModalOpen(true);
+    setMainProduct(product);
+  };
 
   const closeEditModal = () => setIsEditModalOpen(false);
 
   const editModalSubmitHandler = event => {
     event.preventDefault();
-    console.log("edit modal submit");
+    fetch(`http://localhost:3000/api/products/${mainProduct.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: mainProduct.title,
+        price: mainProduct.price,
+        count: mainProduct.count,
+        img: mainProduct.img,
+        popularity: mainProduct.popularity,
+        sale: mainProduct.sale,
+        colors: mainProduct.colors,
+      }),
+    }).then(resp => {
+      if (resp.ok) {
+        getAllProducts();
+        closeEditModal();
+      }
+    });
   };
 
   return (
@@ -169,7 +195,12 @@ export default function ProductsPage() {
                       <td className="border align-middle">{product.count}</td>
                       <td className="border align-middle">
                         <div className="d-flex justify-content-center gap-3">
-                          <button className="btn " style={{ backgroundColor: "#a58eff" }} onClick={openDetailsModal}>
+                          <button
+                            className="btn "
+                            style={{ backgroundColor: "#a58eff" }}
+                            onClick={() => {
+                              openDetailsModal(product);
+                            }}>
                             جزئیات
                           </button>
                           <button
@@ -181,7 +212,12 @@ export default function ProductsPage() {
                             }}>
                             حذف
                           </button>
-                          <button className="btn " style={{ backgroundColor: "#16a3b8" }} onClick={openEditModal}>
+                          <button
+                            className="btn "
+                            style={{ backgroundColor: "#16a3b8" }}
+                            onClick={() => {
+                              openEditModal(product);
+                            }}>
                             ویرایش
                           </button>
                         </div>
@@ -199,32 +235,65 @@ export default function ProductsPage() {
 
       {isDeleteModalOpen && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
 
-      {isDetailsModalOpen && <DetailsModal onClose={closeDetailsModal} />}
+      {isDetailsModalOpen && <DetailsModal onClose={closeDetailsModal} productData={mainProduct} />}
 
       {isEditModalOpen && (
         <EditModal onClose={closeEditModal} onSubmitHandler={editModalSubmitHandler}>
           <div className="edit-product">
             <div className="edit-product__input-group">
               <LuPencil className="icon edit-product__input-group-icon" />
-              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+              <input
+                type="text"
+                className="edit-product__input"
+                placeholder="عنوان جدید"
+                value={mainProduct.title}
+                onChange={e => {
+                  setMainProduct({ ...mainProduct, title: e.target.value });
+                }}
+              />
             </div>
           </div>
           <div className="edit-product">
             <div className="edit-product__input-group">
               <AiOutlineDollarCircle className="icon edit-product__input-group-icon" />
-              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+              <input
+                type="text"
+                className="edit-product__input"
+                placeholder="قیمت جدید"
+                value={mainProduct.price}
+                onChange={e => {
+                  setMainProduct({ ...mainProduct, price: e.target.value });
+                }}
+              />
             </div>
           </div>
           <div className="edit-product">
             <div className="edit-product__input-group">
               <MdStorefront className="icon edit-product__input-group-icon" />
-              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+              <input
+                type="text"
+                className="edit-product__input"
+                placeholder="موجودی جدید"
+                value={mainProduct.count}
+                onChange={e => {
+                  setMainProduct({ ...mainProduct, count: e.target.value });
+                }}
+              />
             </div>
           </div>
           <div className="edit-product">
             <div className="edit-product__input-group">
               <LuLink className="icon edit-product__input-group-icon" />
-              <input type="text" className="edit-product__input" placeholder="عنوان جدید" />
+              <input
+                style={{ textAlign: "left" }}
+                type="text"
+                className="edit-product__input"
+                placeholder="تصویر جدید"
+                value={mainProduct.img}
+                onChange={e => {
+                  setMainProduct({ ...mainProduct, img: e.target.value });
+                }}
+              />
             </div>
           </div>
         </EditModal>
