@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./DetailsModal.css";
 
-export default function DetailsModal({ onClose, productData }) {
+export default function DetailsModal({ onClose, children }) {
   // Element Ref
   const backdropRef = useRef();
 
@@ -40,33 +40,7 @@ export default function DetailsModal({ onClose, productData }) {
 
   return (
     <div className="modal-backdrop active" ref={backdropRef}>
-      <div className="details-modal">
-        <h5 className="fs-4 fw-bold text-start mb-4">جزئیات :</h5>
-        <div className="table-responsive">
-          <table className="table text-nowrap text-nowrap border">
-            <thead>
-              <tr>
-                <th className="border p-2">اسم</th>
-                <th className="border p-2">قیمت</th>
-                <th className="border p-2">محبوبیت</th>
-                <th className="border p-2">تعداد</th>
-                <th className="border p-2">فروش</th>
-                <th className="border p-2">رنگ ها</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border p-2">{productData.title}</td>
-                <td className="border p-2">{productData.price} تومان</td>
-                <td className="border p-2">{productData.popularity} درصد</td>
-                <td className="border p-2">{productData.count}</td>
-                <td className="border p-2">{productData.sale}</td>
-                <td className="border p-2">{productData.colors}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <div className="details-modal">{children}</div>
     </div>
   );
 }

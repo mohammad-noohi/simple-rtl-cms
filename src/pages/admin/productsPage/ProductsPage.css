@@ -66,6 +66,10 @@
   transition: all 200ms ease;
 }
 
+.edit-product .edit-product__input:disabled {
+  opacity: 0.3;
+}
+
 .edit-product .edit-product__input-group-icon {
   color: #757575;
   transition: all 200ms ease;
