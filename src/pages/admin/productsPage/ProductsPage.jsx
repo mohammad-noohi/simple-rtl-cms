@@ -315,7 +315,7 @@ export default function ProductsPage() {
         )}
       </div>
 
-      {isDeleteModalOpen && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
+      {isDeleteModalOpen && <DeleteModal title={"آیا از حذف اطمینان دارید ؟"} submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} onClose={closeDeleteModal} />}
 
       {isDetailsModalOpen && (
         <DetailsModal onClose={closeDetailsModal}>

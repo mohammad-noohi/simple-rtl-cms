@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import "./DeleteModal.css";
 
-export default function DeleteModal({ submitAction, cancelAction, onClose }) {
+export default function DeleteModal({ title, submitAction, cancelAction, onClose }) {
   // Elements Ref
   const backdropRef = useRef();
 
@@ -42,10 +42,10 @@ export default function DeleteModal({ submitAction, cancelAction, onClose }) {
   return ReactDOM.createPortal(
     <div className="modal-backdrop active" ref={backdropRef}>
       <div className="delete-modal">
-        <h1 className="modal-title">آیا از حذف اطمینان دارید ؟</h1>
+        <h1 className="modal-title">{title}</h1>
         <div className="delete-modal-btns">
           <button className="delete-btn delete-modal-accept-btn" onClick={submitAction}>
-            حذف
+            بله
           </button>
           <button className="delete-btn delete-modal-reject-btn" onClick={cancelAction}>
             خیر

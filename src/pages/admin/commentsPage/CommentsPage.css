@@ -1,3 +1,37 @@
 .comments-page-wrapper .details-modal {
   width: 300px;
 }
+
+/* Start Edit Comment From */
+.edit-comment {
+  margin-top: 20px;
+  width: 400px;
+}
+
+.edit-comment .edit-comment__input-group {
+  background-color: #f4f4f4;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid transparent;
+  transition: all 200ms ease;
+}
+
+.edit-comment .edit-comment__input:disabled {
+  opacity: 0.3;
+}
+
+.edit-comment .edit-comment__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.edit-comment .edit-comment__input-group:has(.edit-comment__input:focus) {
+  border-color: #471aaa;
+}
+
+/* Finish Edit Comment From */

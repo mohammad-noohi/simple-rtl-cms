@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "./CommentsPage.css";
+// icons
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+// components
 import ErrorBox from "./../../../components/errorBox/ErrorBox";
 import DetailsModal from "./../../../components/detailsModal/DetailsModal";
 import DeleteModal from "./../../../components/deleteModal/DeleteModal";
+import EditModal from "./../../../components/editModal/EditModal";
 
 export default function CommentsPage() {
   // States
@@ -11,6 +15,9 @@ export default function CommentsPage() {
   const [loadingComments, setLoadingComments] = useState(true);
   const [isOpenCommentModal, setIsOpenCommentModal] = useState(false);
   const [isOpenDeleteCommentModal, setIsOpenDeleteCommentModal] = useState(false);
+  const [isOpenEditCommentModal, setIsOpenEditCommentModal] = useState(false);
+  const [isOpenAcceptCommentModal, setIsOpenAcceptCommentModal] = useState(false);
+  const [isOpenRejectCommentModal, setIsOpenRejectCommentModal] = useState(false);
   const [mainComment, setMainComment] = useState(null);
 
   const getAllComments = () => {
@@ -31,7 +38,6 @@ export default function CommentsPage() {
   }, []);
 
   const openCommentModal = () => {
-    console.log("open comment modal");
     setIsOpenCommentModal(true);
   };
 
@@ -48,6 +54,67 @@ export default function CommentsPage() {
       {
         pending: "درحال حذف کامنت ...",
         success: "کامنت با موفقیت حذف شد",
+        error: "مشکلی پیش آمده",
+      }
+    );
+  };
+
+  const editComment = e => {
+    e.preventDefault();
+    toast.promise(
+      fetch(`http://localhost:3000/api/comments/${mainComment.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: mainComment.body,
+        }),
+      }).then(resp => {
+        if (resp.ok) {
+          getAllComments();
+          setIsOpenEditCommentModal(false);
+        }
+      }),
+      {
+        pending: "درحال ویرایش ...",
+        success: "کامنت با موفقیت ویرایش شد",
+        error: "مشکلی پیش آمده",
+      }
+    );
+  };
+
+  const acceptComment = () => {
+    toast.promise(
+      fetch(`http://localhost:3000/api/comments/accept/${mainComment.id}`, {
+        method: "POST",
+      }).then(resp => {
+        if (resp.ok) {
+          getAllComments();
+          setIsOpenAcceptCommentModal(false);
+        }
+      }),
+      {
+        pending: "در حال تایید ...",
+        success: "کامنت تایید شد",
+        error: "مشکلی پیش آمده",
+      }
+    );
+  };
+
+  const rejectComment = () => {
+    toast.promise(
+      fetch(`http://localhost:3000/api/comments/reject/${mainComment.id}`, {
+        method: "PUT",
+      }).then(resp => {
+        if (resp.ok) {
+          getAllComments();
+          setIsOpenRejectCommentModal(false);
+        }
+      }),
+      {
+        pending: "درحال رد کامنت ...",
+        success: "کامنت با موفقیت رد شد",
         error: "مشکلی پیش آمده",
       }
     );
@@ -100,9 +167,31 @@ export default function CommentsPage() {
                           }}>
                           حذف
                         </button>
-                        <button className="btn btn-warning">ویرایش</button>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => {
+                            setIsOpenEditCommentModal(true);
+                            setMainComment(comment);
+                          }}>
+                          ویرایش
+                        </button>
                         <button className="btn btn-primary">پاسخ</button>
-                        <button className="btn btn-success">تایید</button>
+                        <button
+                          className={`btn btn-success ${comment.isAccept ? "disabled" : ""}`}
+                          onClick={() => {
+                            setIsOpenAcceptCommentModal(true);
+                            setMainComment(comment);
+                          }}>
+                          {comment.isAccept ? <IoCheckmarkDoneSharp /> : "تایید"}
+                        </button>
+                        <button
+                          className={`btn btn-dark ${!comment.isAccept ? "disabled" : ""}`}
+                          onClick={() => {
+                            setIsOpenRejectCommentModal(true);
+                            setMainComment(comment);
+                          }}>
+                          تایید نشده
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -127,13 +216,47 @@ export default function CommentsPage() {
         </DetailsModal>
       )}
 
+      {/* Delete Comment Modal */}
       {isOpenDeleteCommentModal && (
         <DeleteModal
+          title={"آیا از حذف اطمینان دارید ؟"}
           submitAction={removeComment}
           cancelAction={() => setIsOpenDeleteCommentModal(false)}
           onClose={() => {
             setIsOpenDeleteCommentModal(false);
           }}
+        />
+      )}
+
+      {isOpenEditCommentModal && (
+        <EditModal onClose={() => setIsOpenEditCommentModal(false)} onSubmitHandler={editComment}>
+          <div className="edit-comment">
+            <div className="edit-comment__input-group">
+              <textarea
+                style={{ minHeight: "150px" }}
+                type="text"
+                className="edit-comment__input"
+                placeholder="کامنت جدید"
+                value={mainComment.body}
+                onChange={e => setMainComment({ ...mainComment, body: e.target.value })}
+              />
+            </div>
+          </div>
+        </EditModal>
+      )}
+
+      {/* Accept Comment Modal */}
+      {isOpenAcceptCommentModal && (
+        <DeleteModal title={"آیا از تایید اطمینان دارید ؟"} submitAction={acceptComment} cancelAction={() => setIsOpenAcceptCommentModal(false)} onClose={() => setIsOpenAcceptCommentModal(false)} />
+      )}
+
+      {/* Reject Comment Modal */}
+      {isOpenRejectCommentModal && (
+        <DeleteModal
+          title={"آیا از رد کامنت اطمینان دارید ؟"}
+          submitAction={rejectComment}
+          cancelAction={() => setIsOpenRejectCommentModal(false)}
+          onClose={() => setIsOpenRejectCommentModal(false)}
         />
       )}
     </div>
