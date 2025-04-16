@@ -26,6 +26,7 @@ export default function ProductsPage() {
   const [productID, setProductID] = useState(null);
   const [mainProduct, setMainProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
+    // for handle form states in one object
     title: "",
     price: "",
     count: "",
@@ -132,23 +133,42 @@ export default function ProductsPage() {
     );
   };
 
+  // reset form ( clear inputs )
+  const clearFrom = () => {
+    setNewProduct({
+      title: "",
+      price: "",
+      count: "",
+      img: "",
+      popularity: "",
+      sale: "",
+      colors: "",
+    });
+  };
+
   const addNewProduct = e => {
     e.preventDefault();
 
-    console.log("🟢 Product submit triggered", newProduct); // این باید چاپ بشه
-
-    fetch(`http://localhost:3000/api/products`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newProduct),
-    }).then(resp => {
-      console.log(resp);
-      if (resp.ok) {
-        getAllProducts();
+    toast.promise(
+      fetch(`http://localhost:3000/api/products`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      }).then(resp => {
+        console.log(resp);
+        if (resp.ok) {
+          getAllProducts();
+          clearFrom();
+        }
+      }),
+      {
+        pending: "درحال اضافه کردن محصول ...",
+        success: "محصول با موفقیت اضافه شد",
+        error: "مشکلی پیش آمده",
       }
-    });
+    );
   };
 
   return (
@@ -164,6 +184,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="نام محصول"
+                    value={newProduct.title}
                     onChange={e => {
                       setNewProduct({ ...newProduct, title: e.target.value });
                     }}
@@ -176,6 +197,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="قیمت محصول"
+                    value={newProduct.price}
                     onChange={e => {
                       setNewProduct({ ...newProduct, price: e.target.value });
                     }}
@@ -188,6 +210,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="موجودی محصول"
+                    value={newProduct.count}
                     onChange={e => {
                       setNewProduct({ ...newProduct, count: e.target.value });
                     }}
@@ -201,6 +224,7 @@ export default function ProductsPage() {
                     style={{ textAlign: "left", direction: "ltr" }}
                     type="text"
                     placeholder="آدرس عکس محصول"
+                    value={newProduct.img}
                     onChange={e => {
                       setNewProduct({ ...newProduct, img: e.target.value });
                     }}
@@ -213,6 +237,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="رنگ بندی محصول"
+                    value={newProduct.colors}
                     onChange={e => {
                       setNewProduct({ ...newProduct, colors: e.target.value });
                     }}
@@ -225,6 +250,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="میزان محبوبیت محصول"
+                    value={newProduct.popularity}
                     onChange={e => {
                       setNewProduct({ ...newProduct, popularity: e.target.value });
                     }}
@@ -237,6 +263,7 @@ export default function ProductsPage() {
                   <input
                     type="text"
                     placeholder="میزان فروش محصول"
+                    value={newProduct.sale}
                     onChange={e => {
                       setNewProduct({ ...newProduct, sale: e.target.value });
                     }}

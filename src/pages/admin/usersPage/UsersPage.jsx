@@ -25,6 +25,11 @@ export default function UsersPage() {
   const [showEditUserModal, setShowEditUserModal] = useState(false);
   const [mainUser, setMainUser] = useState(null);
 
+  // validation state
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState(false);
+  const [phoneValidation, setPhoneValidation] = useState(false);
+
   // Functions & Actions & EventsHandlers ---------------
   const getAllUsers = () => {
     fetch("http://localhost:3000/api/users")
@@ -65,10 +70,44 @@ export default function UsersPage() {
 
   const openEditModal = () => setShowEditUserModal(true);
   const closeEditModal = () => setShowEditUserModal(false);
+
   const editUser = e => {
     e.preventDefault();
 
-    toast.promise(
+    // phone validation
+    const phoneRegEx = /^(\+98|98|0)?9\d{9}$/;
+    const phoneIsValid = phoneRegEx.test(mainUser.phone);
+
+    // email validation
+    const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailIsValid = emailRegEx.test(mainUser.email);
+
+    // password validation
+    const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@#$%^&*!?]{6,}$/;
+    const passwordIsValid = passwordRegEx.test(mainUser.password);
+
+    if (phoneIsValid) {
+      setPhoneValidation(true);
+    } else {
+      setPhoneValidation(false);
+    }
+
+    if (emailIsValid) {
+      setEmailValidation(true);
+    } else {
+      setEmailValidation(false);
+    }
+
+    if (passwordIsValid) {
+      setPasswordValidation(true);
+    } else {
+      setPasswordValidation(false);
+    }
+
+    // اعتبار سنجی باشه بعدا
+
+    // if validation be correct send data to server
+    /* toast.promise(
       fetch(`http://localhost:3000/api/users/${mainUser.id}`, {
         method: "PUT",
         headers: {
@@ -97,7 +136,7 @@ export default function UsersPage() {
         success: "کاربر با موفقیت ویرایش شد",
         error: "مشکلی پیش آمده",
       }
-    );
+    ); */
   };
 
   // Effects ---------------
@@ -238,6 +277,7 @@ export default function UsersPage() {
                     }}
                   />
                 </div>
+                <p className="text-start mt-2 text-danger error-msg">رمز عبور باید شامل حروف کوچک و بزرگ و عدد باشد و حداقل ۶ رقم باشد</p>
               </div>
             </div>
 
@@ -246,7 +286,7 @@ export default function UsersPage() {
                 <div className="edit-user__input-group">
                   <FiPhone className="icon edit-user__input-group-icon" />
                   <input
-                    type="text"
+                    type="tel"
                     className="edit-user__input"
                     placeholder="تلفن"
                     value={mainUser.phone}
@@ -255,6 +295,7 @@ export default function UsersPage() {
                     }}
                   />
                 </div>
+                <p className="text-start mt-2 text-danger error-msg">شماره تلفن معتبر نیست</p>
               </div>
             </div>
             <div className="col-6">
@@ -287,6 +328,7 @@ export default function UsersPage() {
                     }}
                   />
                 </div>
+                <p className="text-start mt-2 text-danger error-msg">ایمیل وارد شده معتبر نیست</p>
               </div>
             </div>
             <div className="col-6">

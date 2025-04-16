@@ -18,6 +18,18 @@
   transition: all 200ms ease;
 }
 
+.edit-user .edit-user__input-group.notvalid {
+  border: 1.5px solid crimson;
+}
+
+.error-msg {
+  display: none;
+}
+
+.edit-user__input-group.notvalid + .error-msg {
+  display: block;
+}
+
 .edit-user .edit-user__input:disabled {
   opacity: 0.3;
 }
